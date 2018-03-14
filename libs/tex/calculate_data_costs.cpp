@@ -184,9 +184,11 @@ calculate_face_projection_infos(mve::TriangleMesh::ConstPtr mesh,
                 if (viewing_angle < 0.0f || viewing_direction.dot(view_to_face_vec) < 0.0f)
                     continue;
 
-                if (std::acos(viewing_angle) > MATH_DEG2RAD(75.0f))
-                    continue;
-
+                //if (std::acos(viewing_angle) > MATH_DEG2RAD(75.0f))
+                //    continue;
+				float cutoffAngle = settings.geometric_visibility_test ? 75.0f : 90.0f;
+				if (std::acos(viewing_angle) > MATH_DEG2RAD(cutoffAngle))
+					continue;
                 /* Projects into the valid part of the TextureView? */
                 if (!texture_view->inside(v1, v2, v3))
                     continue;
